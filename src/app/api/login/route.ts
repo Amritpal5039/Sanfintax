@@ -27,7 +27,8 @@ export async function POST(request: NextRequest) {
   // Create HTTP ONLY cookie
   const cookie = serialize("token", token, {
     httpOnly: true,
-    secure: true,        // HTTPS only
+    //{secure: true,        // HTTPS only} this is the old code and this is not working. but idk why
+    secure: process.env.NODE_ENV === "production",
     sameSite: "strict",
     path: "/",
     maxAge: 60 * 60 * 24 * 7

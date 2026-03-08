@@ -7,7 +7,8 @@ export async function POST() {
   response.cookies.set("token", "", {
     httpOnly: true,
     expires: new Date(0),
-    path: "/Pages/Dashboard"
+    // old path {path: "/Pages/Dashboard"}, with this path token is not fully removed but now token is fully removed 
+    path: "/"
   });
 
   return response;
