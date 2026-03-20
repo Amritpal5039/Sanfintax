@@ -7,11 +7,38 @@ import mongoose, { Schema, model, models, Document } from 'mongoose';
     email:{
         type: String,
         required:true,
-        unique:true
+        unique:true,
+        trim:true,
+        lowercase:true,
+
     },
     password:{
         type: String,
         required: true,
+
+    },
+    occupation:{
+        type: String
+
+    },
+    income:{
+        type: String
+
+    },
+    contactnumber:{
+        type: String
+
+    },
+    city:{
+        type: String
+
+    },
+    State:{
+        type: String
+
+    },
+    houseno:{
+        type: String
 
     },
 

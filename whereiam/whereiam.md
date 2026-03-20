@@ -1,7 +1,11 @@
 ##### References:- Chatgpt sanfintax chat folder
 
 
-my middleware is not working. i think it is because i havenot set the Lib folder properly. i am missing some thing.
+Need to fix the add/remove/edit FD and make the fronted of the landing page.
+i want red effect from the right top corner to the left bottom corner. color - red black  
+
+##### navbar design #####
+links- https://www.navbar.gallery/navbar/coda
 
 #### Folder structure to be followed
 src
@@ -96,3 +100,22 @@ Reusable utilities
 Production Ready
 
 Works with microservices and serverless
+
+#### Navbar design 
+
+LOGO        Products   Solutions   Knowledge Center   Company       Flag   Contact   Button
+            <----32px gap-8--->                           <---24px--->
+
+Dropdown Columns
+Column1    Column2    Column3    Card
+   <-------40px gap-10------->
+
+Mobile Menu
+Products
+   20px space-y-5
+Solutions
+   20px space-y-5
+Knowledge Center
+   20px space-y-5
+Company
+   20px space-y-5

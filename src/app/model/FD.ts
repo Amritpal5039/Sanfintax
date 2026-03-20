@@ -53,62 +53,63 @@
 //   t = tenure in years
 // ─────────────────────────────────────────────────────────────────────────────
 
-import mongoose, { Schema, Document, Model } from "mongoose";
+import mongoose, { Schema, Document, Model, Types } from "mongoose";
 
 export interface IFD extends Document {
-  userEmail: string;          // owner — fetched from JWT cookie
+
   bankName: string;
   principalAmount: number;
   interestRate: number;       // annual rate in %  e.g. 7.5
   tenure: number;             // in months
   compoundingFrequency: number; // times per year: 1=yearly,2=half,4=quarterly,12=monthly
-  maturityDate: string;       // "YYYY-MM-DD"
+  maturityDate: Date;       // "YYYY-MM-DD"
   maturityAmount: number;     // auto-calculated
+  createdBy?:Types.ObjectId; // optional reference to user ID if you want to switch to ObjectId later
   createdAt: Date;
   updatedAt: Date;
 }
 
 const FDSchema = new Schema<IFD>(
   {
-    userEmail: { type: String, required: true, lowercase: true, trim: true },
     bankName:  { type: String, required: true, trim: true },
     principalAmount:      { type: Number, required: true, min: 1 },
     interestRate:         { type: Number, required: true, min: 0.01 },  // annual %
     tenure:               { type: Number, required: true, min: 1 },     // months
-    compoundingFrequency: { type: Number, required: true, default: 4 }, // quarterly default
-    maturityDate:         { type: String, required: true },
+    compoundingFrequency: { type: Number, required: true, default: 12 }, // monthly default
+    maturityDate:         { type: Date, required: true },
     maturityAmount:       { type: Number, default: 0 },
+    createdBy:        { type: Schema.Types.ObjectId, required:true, ref: "user"},
   },
   { timestamps: true }
 );
 
 // ── Helper: compound interest ─────────────────────────────────────────────────
 // Called before every save and findOneAndUpdate
-function calcMaturity(
-  principal: number,
-  annualRatePercent: number,
-  tenureMonths: number,
-  n: number   // compounding frequency per year
-): number {
-  const r = annualRatePercent / 100;
-  const t = tenureMonths / 12;
-  const amount = principal * Math.pow(1 + r / n, n * t);
-  return Math.round(amount * 100) / 100; // round to 2 decimal places
-}
+// function calcMaturity(
+//   principal: number,
+//   annualRatePercent: number,
+//   tenureMonths: number,
+//   n: number   // compounding frequency per year
+// ): number {
+//   const r = annualRatePercent / 100;
+//   const t = tenureMonths / 12;
+//   const amount = principal * Math.pow(1 + r / n, n * t);
+//   return Math.round(amount * 100) / 100; // round to 2 decimal places
+// }
 
 // ── Pre-save hook ─────────────────────────────────────────────────────────────
-FDSchema.pre("save", function (next) {
-  this.maturityAmount = calcMaturity(
-    this.principalAmount,
-    this.interestRate,
-    this.tenure,
-    this.compoundingFrequency
-  );
-  next();
-});
+// FDSchema.pre("save", function (next) {
+//   this.maturityAmount = calcMaturity(
+//     this.principalAmount,
+//     this.interestRate,
+//     this.tenure,
+//     this.compoundingFrequency
+//   );
+//   next();
+// });
 
 // Export the helper so the PUT route can recalculate without re-saving
-export { calcMaturity };
+// export { calcMaturity };
 
 // Prevent model re-compilation in Next.js hot-reload
 const FD: Model<IFD> =
