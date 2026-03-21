@@ -219,8 +219,9 @@ export default function FDPage() {
                 <button className="absolute right-0 top-0 m-2" onClick={() => handleEdit(fd)}> <SquarePen /></button>
                 <button className="absolute right-0 top-10 m-2" onClick={() => handleDelete(fd._id)}><Trash2 /></button>
                 </Suspense>
-              </div>
+              </div> 
             ))}
+            {fds.length === 0 && <p className="text-white flex justify-center items-center"><span className="text-red-600">No</span> {name}'s <span className="text-red-600 gap-1"> FD</span> Data Found.</p>}
           </>
         )}
         

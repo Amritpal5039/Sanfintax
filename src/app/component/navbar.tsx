@@ -98,7 +98,7 @@ export default function Navbar() {
               </span>
             ) : (
               <button
-                className="bg-black text-white px-5 py-2 rounded-xl text-sm hover:opacity-90 "
+                className="bg-red-600 text-white px-5 py-2 rounded-xl text-sm hover:opacity-90 "
                 onClick={() => setlogoutanddashboardbutton((prev) => !prev)}
               >
                 Hello {name}
@@ -112,7 +112,7 @@ export default function Navbar() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
               className="bg-black text-white px-5 py-2 rounded-xl text-sm hover:opacity-90  "
-              onClick={() => router.push("/Pages/Dashboard")}
+              onClick={() => router.push("/Pages/dashboard")}
             >
               Dashboard
             </motion.button>
